@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flipkart Product Price Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container">
+        <h1 class="text-center my-4">Flipkart Product Price Tracker</h1>
+
+        <!-- Product Fetch Form -->
+        <form action="/fetch" method="POST" class="mb-4">
+            <div class="input-group">
+                <input type="text" class="form-control" name="url" placeholder="Paste Flipkart product link here" required>
+                <button type="submit" class="btn btn-primary">Fetch Product</button>
+            </div>
+        </form>
+
+        <!-- Search Form -->
+        <form action="/search" method="POST" class="mb-4">
+            <div class="input-group">
+                <input type="text" class="form-control" name="query" placeholder="Search by product title">
+                <button type="submit" class="btn btn-secondary">Search</button>
+            </div>
+        </form>
+
+        <!-- Filter Form -->
+        <form action="/filter" method="POST" class="mb-4">
+            <div class="row">
+                <div class="col">
+                    <input type="number" class="form-control" name="min_price" placeholder="Min Price" required>
+                </div>
+                <div class="col">
+                    <input type="number" class="form-control" name="max_price" placeholder="Max Price" required>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-info">Filter</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Product List -->
+        <div class="row" id="product-list">
+            {% for product in products %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ product[6] }}" class="card-img-top" alt="{{ product[1] }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product[1] }}</h5>
+                        <p class="card-text">Price: ₹{{ product[3] }}</p>
+                        <p class="card-text">Last Checked: {{ product[7] }}</p>
+                        <a href="{{ url_for('product_detail', productId=product[1]) }}" class="btn btn-primary">View Details</a>
+                        <button class="btn btn-secondary" onclick="recheckPrice('{{ product[1] }}')">Recheck Price</button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        function recheckPrice(productId) {
+            fetch(`/recheck/${productId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Price updated!');
+                        location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                });
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

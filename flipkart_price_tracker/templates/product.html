@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product[1] }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container">
+        <h1 class="my-4">{{ product[1] }}</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <img src="{{ product[6] }}" class="img-fluid" alt="{{ product[1] }}">
+            </div>
+            <div class="col-md-6">
+                <p>{{ product[2] }}</p>
+                <p><strong>Price:</strong> ₹{{ product[3] }}</p>
+                <p><strong>Reviews:</strong> {{ product[4] }}</p>
+                <p><strong>Total Purchases:</strong> {{ product[5] }}</p>
+                <p>Last Checked: {{ product[7] }}</p>
+                <a href="{{ product[6] }}" class="btn btn-primary" target="_blank">View on Flipkart</a>
+            </div>
+        </div>
+
+        <h2 class="my-4">Price History</h2>
+        <ul class="list-group">
+            {% for price in history %}
+            <li class="list-group-item">₹{{ price[2] }} - {{ price[3] }}</li>
+            {% endfor %}
+        </ul>
+
+        <a href="/" class="btn btn-secondary my-4">Back to Home</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
