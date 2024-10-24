@@ -1,4 +1,4 @@
-# Code_Quest
+# Flipkart Price Tracker Application
     Replace `app.py` with the name of your main application file.
 6.  **Access the Application**
     Open your web browser and go to `http://127.0.0.1:5000` to access the Flipkart Product Price Tracker.
